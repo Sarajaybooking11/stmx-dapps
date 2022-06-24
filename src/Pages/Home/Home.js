@@ -13,7 +13,7 @@ const Home = () => {
   const [userWallet, setuserWallet] = useState("");
   const [walletAddress, setwalletAddress] = useState("");
   const [walletConnected, setwalletConnected] = useState(false);
-  const text = `Please open this website on your pc and connect your wallet using Metamask extension on your PC`;
+
   return (
     <div className={styles.container}>
       <div className={styles.contentContainer}>

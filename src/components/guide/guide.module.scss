@@ -237,7 +237,29 @@
         // border: 2px solid red;
         .content {
           width: 100%;
-          font-size: 13px;
+
+          .connectPcContainer,
+          .metaContainer,
+          .trustContainer {
+            .connectPc1 {
+              font-size: 13px;
+            }
+          }
+          .pcInfo {
+            max-height: 0px;
+            overflow: hidden;
+            width: 100%;
+            transition: all 0.6s ease-in-out;
+            .pcInfoContent {
+              ul {
+                li {
+                  // border: 2px solid blue;
+                  line-height: 1.8 !important;
+                  font-size: 13px !important;
+                }
+              }
+            }
+          }
         }
       }
     }

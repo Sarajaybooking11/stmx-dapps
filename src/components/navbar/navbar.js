@@ -56,8 +56,9 @@ const Navbar = ({
         balance = parseFloat(balance).toFixed(5);
         console.log(balance);
         sessionStorage.setItem("setuserWallet", account);
-        // Format the user wallet address
         setwalletConnected(true);
+        //
+        // Format the user wallet address
         account = `${account.slice(0, 4)}…${account.slice(
           account.length - 5,
           account.length
