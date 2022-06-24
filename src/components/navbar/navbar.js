@@ -1,21 +1,9 @@
 import React, { useEffect } from "react";
 import styles from "./navbar.module.scss";
 import logo from "../../assets/favicon.jpg";
-import { toast } from "react-toastify";
-import { ethers } from "ethers";
+import { connectWallet } from "./handleWalletConnect";
 
-const Navbar = ({
-  setProcessingWalletConnect,
-  processingWalletConnect,
-  setchainID,
-  setAccountBalance,
-  setuserWallet,
-  userWallet,
-  setwalletConnected,
-  setwalletAddress,
-  walletConnected,
-  walletAddress,
-}) => {
+const Navbar = ({ setStateValue, stateValue }) => {
   useEffect(() => {
     const walletAddressData = sessionStorage.getItem("account");
     const balanceData = sessionStorage.getItem("balance");
@@ -23,80 +11,31 @@ const Navbar = ({
     const userWalletData = sessionStorage.getItem("setuserWallet");
 
     if (walletAddressData) {
-      setwalletAddress(walletAddressData);
-      setwalletConnected(true);
-      setAccountBalance(balanceData);
-      setchainID(parseInt(chainIdData));
-      setuserWallet(userWalletData);
-      console.log("yes connected");
+      setStateValue({
+        initiateWallet: true,
+        processingWalletConnect: false,
+        chainID: parseInt(chainIdData),
+        accountBalance: balanceData,
+        userWallet: userWalletData,
+        walletAddress: walletAddressData,
+        walletConnected: true,
+      });
+
       // (async () => {
       //   await getErc20Tokens();
       //   setInitiateWallet(false);
       // })();
     }
-  }, []);
-  console.log(userWallet);
-  const connectWallet = async () => {
-    if (typeof window.ethereum !== "undefined") {
-      const id = toast.loading("Processing...");
-      setProcessingWalletConnect(true);
-      // request for the account of a connected user
-      let [account] = await window.ethereum.request({
-        method: "eth_requestAccounts",
-      });
-      try {
-        const provider = new ethers.providers.Web3Provider(window.ethereum);
+  }, [stateValue.walletConnected]);
 
-        const { chainId } = await provider.getNetwork();
-        console.log(chainId);
-
-        // getBalance function accepts strings only
-        let balance = await provider.getBalance(account);
-        balance = ethers.utils.formatEther(balance);
-        balance = parseFloat(balance).toFixed(5);
-        console.log(balance);
-        sessionStorage.setItem("setuserWallet", account);
-        setwalletConnected(true);
-        //
-        // Format the user wallet address
-        account = `${account.slice(0, 4)}…${account.slice(
-          account.length - 5,
-          account.length
-        )}`;
-        console.log(account);
-        // save data to local storage
-        sessionStorage.setItem("account", account);
-        sessionStorage.setItem("balance", balance);
-        sessionStorage.setItem("chainID", parseInt(chainId));
-
-        setProcessingWalletConnect(false);
-        return toast.update(id, {
-          render: "Wallet connected",
-          type: "success",
-          isLoading: false,
-          autoClose: 3000,
-        });
-      } catch (error) {
-        console.log("Error: ", error);
-        return toast.update(id, {
-          render:
-            "Please install metamask browser extension wallet and import your wallet to get started ",
-          type: "warning",
-          isLoading: false,
-          autoClose: 3000,
-        });
-      }
-    } else {
-      const id = toast.loading("Processing...");
-      return toast.update(id, {
-        render:
-          "Please install metamask browser extension wallet and import your wallet ",
-        type: "warning",
-        isLoading: false,
-        autoClose: 3000,
-      });
-    }
+  const updateSateValue = async (key, value) => {
+    let newObj = { ...stateValue };
+    newObj[key] = value;
+    return setStateValue(newObj);
   };
+
+  console.log(stateValue);
+
   return (
     <div className={styles.container}>
       <div className={styles.logoContainer}>
@@ -106,10 +45,18 @@ const Navbar = ({
         <div className={styles.logoText}>StormX</div>
       </div>
       <div className={styles.buttonContainer}>
-        <button onClick={connectWallet}>
-          {walletConnected
-            ? walletAddress
-            : !processingWalletConnect
+        <button
+          onClick={() => {
+            connectWallet({
+              updateSateValue,
+              stateValue,
+              setStateValue
+            });
+          }}
+        >
+          {stateValue.walletConnected
+            ? stateValue.walletAddress
+            : !stateValue.processingWalletConnect
             ? "Connect Wallet"
             : "Processing"}
         </button>

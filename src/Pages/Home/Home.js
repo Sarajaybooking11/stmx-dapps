@@ -1,39 +1,27 @@
 import React, { useState } from "react";
 import Footer from "../../components/footer/Footer";
 import Guide from "../../components/guide/Guide";
-// import Header from "../../components/header/header";
 import Navbar from "../../components/navbar/navbar";
 import Table from "../../components/Table.js/Table";
 import styles from "./home.module.scss";
 
 const Home = () => {
-  const [processingWalletConnect, setProcessingWalletConnect] = useState(false);
-  const [chainID, setchainID] = useState(0);
-  const [accountBalance, setAccountBalance] = useState(null);
-  const [userWallet, setuserWallet] = useState("");
-  const [walletAddress, setwalletAddress] = useState("");
-  const [walletConnected, setwalletConnected] = useState(false);
+  const [stateValue, setStateValue] = useState({
+    initiateWallet: false,
+    processingWalletConnect: false,
+    chainID: 0,
+    accountBalance: 0,
+    userWallet: false,
+    walletAddress: false,
+    walletConnected: false,
+  });
 
   return (
     <div className={styles.container}>
       <div className={styles.contentContainer}>
         <div className={styles.navbarContainer}>
-          <Navbar
-            setProcessingWalletConnect={setProcessingWalletConnect}
-            processingWalletConnect={processingWalletConnect}
-            setchainID={setchainID}
-            setAccountBalance={setAccountBalance}
-            setuserWallet={setuserWallet}
-            userWallet={userWallet}
-            setwalletAddress={setwalletAddress}
-            walletAddress={walletAddress}
-            walletConnected={walletConnected}
-            setwalletConnected={setwalletConnected}
-          />
+          <Navbar stateValue={stateValue} setStateValue={setStateValue} />
         </div>
-        {/*   <div className={styles.headerContainer}>
-          <Header marqueeText={text} />
-        </div>*/}
         <div className={styles.guideContainer}>
           <Guide />
         </div>
