@@ -1,6 +1,6 @@
 .container {
   width: 100%;
-  min-height: 500px;
+  min-height: 550px;
   // border: 2px solid red;
   .containerContent {
     width: 100%;
@@ -8,6 +8,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    // border: 2px solid red;
     .countdown {
       color: var(--buttonColor);
       height: inherit;
@@ -101,35 +102,88 @@
       // progress bar ends here
     }
     .guide {
+      // hide scroll bar starts here
+      &::-webkit-scrollbar {
+        display: none;
+      }
+      scrollbar-width: none;
+      // hide scroll bar end here
       display: flex;
       justify-content: center;
       align-items: center;
-      min-height: 100%;
+      height: 100%;
       width: 60%;
       // border: 2px solid green;
+      overflow: scroll;
+      padding-left: 30px;
       color: var(--white);
       .content {
-        width: 90%;
+        width: 100%;
         height: 100%;
-        // border: 2px solid red;
-        .claimReward,
-        .noteReward {
+        // border: 2px solid white;
+
+        span {
+          font-size: 13px;
+        }
+        .connectPcContainer,
+        .metaContainer,
+        .trustContainer {
+          margin-top: 20px;
+          background-color: var(--buttonColor);
+          border: 1px solid var(--white);
           width: 100%;
-          h2 {
-            // text-align: center;
-            color: var(--buttonColor);
+          .connectPc1 {
+            min-height: 45px;
+            cursor: pointer;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            // border: 2px solid white;
+            .leftIcon {
+              font-weight: 700;
+              display: flex;
+              justify-content: space-between;
+              align-items: center;
+              min-width: 100px;
+              margin: 0 20px;
+              div {
+                padding-right: 20px;
+              }
+              .icon {
+                display: flex;
+                // justify-content: space-between;
+                align-items: center;
+                // border: 2px solid red;
+                color: var(--white);
+                font-size: 20px;
+              }
+            }
+            .rightIcon {
+              min-width: 50px;
+              font-size: 20px;
+            }
           }
-          nav {
-            ul {
-              li {
-                list-style: none;
-                div {
-                  span {
-                    padding: 0 10px;
-                    // border: 2px solid red;
-                    &:nth-child(1) {
-                      color: var(--buttonColor);
-                    }
+          .pcInfo {
+            // border: 2px solid red;
+            max-height: 0px;
+            overflow: hidden;
+            width: 100%;
+            transition: all 0.6s ease-in-out;
+            .pcInfoContent {
+              // border: 2px solid green;
+              padding: 0 20px;
+              ul {
+                li {
+                  line-height: 2;
+                  font-size: 15px;
+                  margin-bottom: 10px;
+                  // border: 2px solid black;
+                  img {
+                    width: 100%;
+                    height: 20%;
+                    // border: 2px solid purple;
+                    object-fit: contain;
                   }
                 }
               }
@@ -155,6 +209,7 @@
   .container {
     min-height: 400px;
     .containerContent {
+      // border: 2px solid red;
       flex-direction: column;
       .countdown {
         width: 95%;
@@ -173,16 +228,16 @@
         }
       }
       .guide {
-        // margin-top: 20px;
-        width: 95%;
+        margin: 20px 0;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding-left: 0;
         // border: 2px solid red;
         .content {
           width: 100%;
           font-size: 13px;
-          .claimReward,
-          .noteReward {
-            margin-top: 20px;
-          }
         }
       }
     }

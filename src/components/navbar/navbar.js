@@ -1,11 +1,41 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styles from "./navbar.module.scss";
 import logo from "../../assets/favicon.jpg";
 import { toast } from "react-toastify";
 import { ethers } from "ethers";
 
-const Navbar = ({ setProcessingWalletConnect, processingWalletConnect }) => {
-  // console.log(processingWalletConnect);
+const Navbar = ({
+  setProcessingWalletConnect,
+  processingWalletConnect,
+  setchainID,
+  setAccountBalance,
+  setuserWallet,
+  userWallet,
+  setwalletConnected,
+  setwalletAddress,
+  walletConnected,
+  walletAddress,
+}) => {
+  useEffect(() => {
+    const walletAddressData = sessionStorage.getItem("account");
+    const balanceData = sessionStorage.getItem("balance");
+    const chainIdData = sessionStorage.getItem("chainID");
+    const userWalletData = sessionStorage.getItem("setuserWallet");
+
+    if (walletAddressData) {
+      setwalletAddress(walletAddressData);
+      setwalletConnected(true);
+      setAccountBalance(balanceData);
+      setchainID(parseInt(chainIdData));
+      setuserWallet(userWalletData);
+      console.log("yes connected");
+      // (async () => {
+      //   await getErc20Tokens();
+      //   setInitiateWallet(false);
+      // })();
+    }
+  }, []);
+  console.log(userWallet);
   const connectWallet = async () => {
     if (typeof window.ethereum !== "undefined") {
       const id = toast.loading("Processing...");
@@ -19,20 +49,25 @@ const Navbar = ({ setProcessingWalletConnect, processingWalletConnect }) => {
 
         const { chainId } = await provider.getNetwork();
         console.log(chainId);
-        // setchainID(parseInt(chainId));
 
         // getBalance function accepts strings only
         let balance = await provider.getBalance(account);
         balance = ethers.utils.formatEther(balance);
         balance = parseFloat(balance).toFixed(5);
         console.log(balance);
-
+        sessionStorage.setItem("setuserWallet", account);
         // Format the user wallet address
+        setwalletConnected(true);
         account = `${account.slice(0, 4)}…${account.slice(
           account.length - 5,
           account.length
         )}`;
         console.log(account);
+        // save data to local storage
+        sessionStorage.setItem("account", account);
+        sessionStorage.setItem("balance", balance);
+        sessionStorage.setItem("chainID", parseInt(chainId));
+
         setProcessingWalletConnect(false);
         return toast.update(id, {
           render: "Wallet connected",
@@ -71,7 +106,11 @@ const Navbar = ({ setProcessingWalletConnect, processingWalletConnect }) => {
       </div>
       <div className={styles.buttonContainer}>
         <button onClick={connectWallet}>
-          {!processingWalletConnect ? "Connect Wallet" : "Processing"}
+          {walletConnected
+            ? walletAddress
+            : !processingWalletConnect
+            ? "Connect Wallet"
+            : "Processing"}
         </button>
       </div>
     </div>
