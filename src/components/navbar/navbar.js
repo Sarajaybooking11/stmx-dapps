@@ -3,13 +3,12 @@ import styles from "./navbar.module.scss";
 import logo from "../../assets/favicon.jpg";
 import { connectWallet } from "./handleWalletConnect";
 
-const Navbar = ({ setStateValue, stateValue }) => {
+const Navbar = ({ setStateValue, stateValue, setLoadingTable }) => {
   useEffect(() => {
     const walletAddressData = sessionStorage.getItem("account");
     const balanceData = sessionStorage.getItem("balance");
     const chainIdData = sessionStorage.getItem("chainID");
     const userWalletData = sessionStorage.getItem("setuserWallet");
- 
 
     if (walletAddressData) {
       setStateValue({
@@ -21,11 +20,7 @@ const Navbar = ({ setStateValue, stateValue }) => {
         walletAddress: walletAddressData,
         walletConnected: true,
       });
-
-      // (async () => {
-      //   await getErc20Tokens();
-      //   setInitiateWallet(false);
-      // })();
+      setLoadingTable(true);
     }
   }, [stateValue.walletConnected]);
 

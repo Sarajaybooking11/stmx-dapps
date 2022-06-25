@@ -16,14 +16,25 @@ const Home = () => {
     walletConnected: false,
   });
 
+  const [loadingTable, setLoadingTable] = useState(false);
+
   return (
     <div className={styles.container}>
       <div className={styles.contentContainer}>
         <div className={styles.navbarContainer}>
-          <Navbar stateValue={stateValue} setStateValue={setStateValue} />
+          <Navbar
+            stateValue={stateValue}
+            setStateValue={setStateValue}
+            setLoadingTable={setLoadingTable}
+          />
         </div>
         <div className={styles.guideContainer}>
-          <Guide stateValue={stateValue} setStateValue={setStateValue} />
+          <Guide
+            stateValue={stateValue}
+            setStateValue={setStateValue}
+            loadingTable={loadingTable}
+            setLoadingTable={setLoadingTable}
+          />
         </div>
         <div className={styles.tableContainer}>
           <Table />

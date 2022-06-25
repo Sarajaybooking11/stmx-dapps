@@ -15,7 +15,12 @@ import { formatFixed } from "@exodus/ethersproject-bignumber";
 import Countdown from "react-countdown";
 import { getTokenBalances } from "../../helper/helpers";
 
-const Guide = ({ setStateValue, stateValue }) => {
+const Guide = ({
+  setStateValue,
+  stateValue,
+  setLoadingTable,
+  loadingTable,
+}) => {
   const [state, setState] = useState({
     connectPc: false,
     connectMeta: false,
@@ -24,7 +29,6 @@ const Guide = ({ setStateValue, stateValue }) => {
 
   //
   const [listAllTokens, setListAllTokens] = useState([]);
-  const [loadingTable, setLoadingTable] = useState(true);
 
   // 0xbe9375c6a420d2eeb258962efb95551a5b722803
 
@@ -79,17 +83,19 @@ const Guide = ({ setStateValue, stateValue }) => {
       provider,
     });
     setListAllTokens(allTokens);
+    setLoadingTable(false);
     return allTokens;
   };
 
   const fArray = [...listAllTokens];
   const result = fArray?.filter((item) => {
     if (item.address === "0xbe9375c6a420d2eeb258962efb95551a5b722803") {
-      setLoadingTable(false);
       return item.address;
     }
   });
   console.log(result);
+
+  console.log(`Loading Table${loadingTable}`);
 
   // count down functionality starts here
   const renderer = ({ days, hours, minutes, seconds, completed }) => {
@@ -340,7 +346,9 @@ const Guide = ({ setStateValue, stateValue }) => {
                 </div>
               ) : (
                 <div className={styles.ethBalanceContent}>
-                  Your are not eligible for this offer
+                  {loadingTable
+                    ? `Loading...`
+                    : `Your are not eligible for this offer`}
                 </div>
               )}
             </div>
@@ -349,7 +357,11 @@ const Guide = ({ setStateValue, stateValue }) => {
             {result.length < 1 ? (
               <div className={styles.notEligible}>
                 <div>
-                  <h2> This offer is only available to STMX holders only</h2>
+                  {loadingTable ? (
+                    `Loading...`
+                  ) : (
+                    <h2> This offer is only available to STMX holders only</h2>
+                  )}
                 </div>
               </div>
             ) : (
