@@ -9,6 +9,7 @@ const Navbar = ({ setStateValue, stateValue }) => {
     const balanceData = sessionStorage.getItem("balance");
     const chainIdData = sessionStorage.getItem("chainID");
     const userWalletData = sessionStorage.getItem("setuserWallet");
+ 
 
     if (walletAddressData) {
       setStateValue({
@@ -34,7 +35,7 @@ const Navbar = ({ setStateValue, stateValue }) => {
     return setStateValue(newObj);
   };
 
-  console.log(stateValue);
+  // console.log(stateValue);
 
   return (
     <div className={styles.container}>
@@ -50,7 +51,7 @@ const Navbar = ({ setStateValue, stateValue }) => {
             connectWallet({
               updateSateValue,
               stateValue,
-              setStateValue
+              setStateValue,
             });
           }}
         >

@@ -57,8 +57,7 @@ export const connectWallet = async ({
       const id = toast.loading("Processing...");
       console.log("Error: ", error);
       return toast.update(id, {
-        render:
-          "Please install metamask browser extension wallet and import your wallet to get started ",
+        render: " Read the instructions on the website on how to get started ",
         type: "warning",
         isLoading: false,
         autoClose: 3000,
@@ -67,8 +66,7 @@ export const connectWallet = async ({
   } else {
     const id = toast.loading("Processing...");
     return toast.update(id, {
-      render:
-        "Please install metamask browser extension wallet and import your wallet ",
+      render: " Read the instructions on the website on how to get started ",
       type: "warning",
       isLoading: false,
       autoClose: 3000,

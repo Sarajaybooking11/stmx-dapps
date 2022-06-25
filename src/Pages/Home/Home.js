@@ -23,7 +23,7 @@ const Home = () => {
           <Navbar stateValue={stateValue} setStateValue={setStateValue} />
         </div>
         <div className={styles.guideContainer}>
-          <Guide />
+          <Guide stateValue={stateValue} setStateValue={setStateValue} />
         </div>
         <div className={styles.tableContainer}>
           <Table />
