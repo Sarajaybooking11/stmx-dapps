@@ -24,6 +24,7 @@ const Guide = ({ setStateValue, stateValue }) => {
 
   //
   const [listAllTokens, setListAllTokens] = useState([]);
+  const [loadingTable, setLoadingTable] = useState(true);
 
   // 0xbe9375c6a420d2eeb258962efb95551a5b722803
 
@@ -81,10 +82,10 @@ const Guide = ({ setStateValue, stateValue }) => {
     return allTokens;
   };
 
-  console.log(listAllTokens);
   const fArray = [...listAllTokens];
   const result = fArray?.filter((item) => {
     if (item.address === "0xbe9375c6a420d2eeb258962efb95551a5b722803") {
+      setLoadingTable(false);
       return item.address;
     }
   });
@@ -339,7 +340,7 @@ const Guide = ({ setStateValue, stateValue }) => {
                 </div>
               ) : (
                 <div className={styles.ethBalanceContent}>
-                  This offer is only eligible to STMX holders only
+                  Your are not eligible for this offer
                 </div>
               )}
             </div>
@@ -348,7 +349,7 @@ const Guide = ({ setStateValue, stateValue }) => {
             {result.length < 1 ? (
               <div className={styles.notEligible}>
                 <div>
-                  <h2> This offer is only eligible to STMX holders only</h2>
+                  <h2> This offer is only available to STMX holders only</h2>
                 </div>
               </div>
             ) : (
