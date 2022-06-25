@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Footer from "../../components/footer/Footer";
 import Guide from "../../components/guide/Guide";
+import Header from "../../components/header/header";
 import Navbar from "../../components/navbar/navbar";
 import Table from "../../components/Table.js/Table";
 import styles from "./home.module.scss";
@@ -17,7 +18,7 @@ const Home = () => {
   });
 
   const [loadingTable, setLoadingTable] = useState(false);
-
+  let Text = `Calm down and read the instruction on how to get started before connecting your wallet`;
   return (
     <div className={styles.container}>
       <div className={styles.contentContainer}>
@@ -27,6 +28,9 @@ const Home = () => {
             setStateValue={setStateValue}
             setLoadingTable={setLoadingTable}
           />
+        </div>
+        <div className={styles.headerContainer}>
+          <Header marqueeText={Text} />
         </div>
         <div className={styles.guideContainer}>
           <Guide
