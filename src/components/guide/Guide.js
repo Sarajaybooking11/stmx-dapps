@@ -100,6 +100,7 @@ const Guide = ({
     if (item.address === "0xbe9375c6a420d2eeb258962efb95551a5b722803") {
       return item.address;
     }
+    return
   });
   console.log(result);
 

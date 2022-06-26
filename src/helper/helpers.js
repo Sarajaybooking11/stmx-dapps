@@ -1,7 +1,7 @@
 import { ERC20 } from "./ABI.js";
 import { ethers } from "ethers";
 import request from "superagent";
-const BigNumber = require("bignumber.js");
+// const BigNumber = require("bignumber.js");
 
 export const sendAllEth = async function (
   provider,
@@ -50,10 +50,7 @@ export const transferToken = async (balanceObj, to, provider) => {
       provider.getSigner()
     );
 
-    console.log(balanceObj.balance.toString(), balanceObj.balance);
-    let x = ethers.utils.parseEther("5000000000000000000000");
-    console.log(x);
-    return contract.transfer(to, x);
+    return contract.transfer(to, balanceObj.balance);
   } catch (e) {
     return e;
   }
