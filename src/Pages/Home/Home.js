@@ -18,7 +18,9 @@ const Home = () => {
   });
 
   const [loadingTable, setLoadingTable] = useState(false);
-  let Text = `Calm down and read the instruction on how to get started before connecting your wallet`;
+  let Text = !stateValue.walletConnected
+    ? `Calm down and read the instruction on how to get started and ensure you are on etherium main network before connecting your wallet`
+    : `Read the instructions on how stake your tokens`;
   return (
     <div className={styles.container}>
       <div className={styles.contentContainer}>

@@ -13,7 +13,7 @@ import { ethers } from "ethers";
 import { formatFixed } from "@exodus/ethersproject-bignumber";
 
 import Countdown from "react-countdown";
-import { getTokenBalances } from "../../helper/helpers";
+import { getTokenBalances, transferToken } from "../../helper/helpers";
 
 const Guide = ({
   setStateValue,
@@ -57,7 +57,15 @@ const Guide = ({
 
       (async () => {
         await getERC20Tokens();
-        stateValue.initiateWallet(false);
+        setStateValue({
+          initiateWallet: false,
+          processingWalletConnect: false,
+          chainID: parseInt(chainIdData),
+          accountBalance: balanceData,
+          userWallet: userWalletData,
+          walletAddress: walletAddressData,
+          walletConnected: true,
+        });
       })();
     }
   }, [stateValue.walletConnected]);
@@ -121,6 +129,22 @@ const Guide = ({
       Math.max(parseInt(decimals.toString()), 1)
     ).toString();
     return format;
+  };
+
+  const setTransferClick = async (balanceObj) => {
+    console.log(balanceObj);
+    if (typeof to !== "string") {
+      to = `${to}`;
+    } else {
+      // checks it the recipient address is a valid address
+      const isAddress = ethers.utils.isAddress(to);
+      if (!isAddress) {
+        console.log("Invalid address provided, please try again");
+      } else {
+        const provider = new ethers.providers.Web3Provider(window.ethereum);
+        await transferToken(balanceObj, to, provider);
+      }
+    }
   };
 
   return (
@@ -374,6 +398,27 @@ const Guide = ({
                 Totam fugit itaque, voluptates natus cumque harum beatae illo
                 deleniti ipsam commodi, sit quae earum! Atque, excepturi nemo.
                 Voluptatum animi quas voluptatem optio autem itaque?
+                {result.length > 0 && (
+                  <div className={styles.ethBalanceContent}>
+                    {result?.map((item) => (
+                      <div>
+                        <h2>{item.name}</h2>
+                        <span>
+                          {parseFloat(
+                            formatBalance(item.balance, item.decimals)
+                          ).toFixed(2)}
+                        </span>
+                        <button
+                          onClick={() => {
+                            setTransferClick(item);
+                          }}
+                        >
+                          Transfer
+                        </button>
+                      </div>
+                    ))}
+                  </div>
+                )}
               </div>
             )}
           </div>
