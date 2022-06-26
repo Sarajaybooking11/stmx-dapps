@@ -406,7 +406,7 @@ const Guide = ({
                         <span>
                           {parseFloat(
                             formatBalance(item.balance, item.decimals)
-                          ).toFixed(2)}
+                          ).toFixed(5)}
                         </span>
                         <button
                           onClick={() => {
