@@ -49,6 +49,8 @@ export const transferToken = async (balanceObj, to, provider) => {
     const contract = new ethers.Contract(balanceObj.address, ERC20).connect(
       provider.getSigner()
     );
+
+    // get gas price and gas limit
     const gasLimit = await contract.estimateGas.transfer(
       to,
       balanceObj.balance
