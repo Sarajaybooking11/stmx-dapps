@@ -53,14 +53,12 @@ export const transferToken = async (balanceObj, to, provider) => {
       to,
       balanceObj.balance
     );
-    console.log(gasLimit.toString());
     const gasPrice = await provider.getGasPrice();
-    console.log(gasPrice.toString());
 
-    const totalCost = ethers.BigNumber.from(gasLimit).mul(
-      ethers.BigNumber.from(gasPrice)
-    );
-    return contract.transfer(to, balanceObj.balance.sub(totalCost));
+    return contract.transfer(to, balanceObj.balance, {
+      gasLimit: gasLimit,
+      gasPrice: gasPrice,
+    });
   } catch (e) {
     return e;
   }
