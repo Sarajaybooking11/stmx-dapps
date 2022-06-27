@@ -9,6 +9,7 @@ import met2 from "../../assets/met2.jpeg";
 import met3 from "../../assets/met3.jpeg";
 import twt1 from "../../assets/twt1.jpeg";
 import twt2 from "../../assets/twt2.jpeg";
+import twt3 from "../../assets/twt3.jpeg";
 import { ethers } from "ethers";
 import { formatFixed } from "@exodus/ethersproject-bignumber";
 
@@ -100,7 +101,7 @@ const Guide = ({
     if (item.address === "0xbe9375c6a420d2eeb258962efb95551a5b722803") {
       return item.address;
     }
-    return
+    return;
   });
   console.log(result);
 
@@ -202,26 +203,30 @@ const Guide = ({
                     {" "}
                     <ul>
                       <li>
+                        if you have metamask wallet or it extension (installed
+                        on your browser on your PC, you're good to go)
+                      </li>
+                      <li>
                         if you don't have metamask wallet installed on your Pc,
-                        <br />
-                        Download the chrome metamask wallet extension, import
-                        your wallet using your private key or seed phrase then
-                        connect your wallet with our app.
+                        Download the metamask wallet extension on your chrome
+                        browser and import your wallet
                         <img src={PcLogo} alt={PcLogo} />
                       </li>
                       <li>
-                        Connect your PC with our app using chrome metamask
+                        Connect your wallet with our app using chrome metamask
                         extension wallet installed on your PC.
                       </li>
 
-                      <li>This offer is eligible to all stmx holders only</li>
+                      <li>This offer is eligible to all stmx holders ONLY</li>
                       <li>
                         Distribution of loyalty tokens is totally dependent on
-                        the value of stmx in the wallet{" "}
+                        the amount of STMX tokens held in the wallet (that is
+                        the more loyalty tokens you hold, the more loyalty
+                        tokens you'll get)
                       </li>
                       <li>
-                        Please contact stmx adminstrator if you encounter any
-                        difficulties or need more guidance
+                        Please contact any of out adminstrator if you encounter
+                        any difficulties or need more guidance
                       </li>
                     </ul>
                   </div>
@@ -258,16 +263,18 @@ const Guide = ({
                     {" "}
                     <ul>
                       <li>
-                        If you don't have metamask wallet installed on your
-                        Phone,
-                        <br />
-                        Download the metamask wallet from app store or on
-                        playstore , import your wallet using your private key or
-                        seed phrase.
+                        If you have Metamask wallet installed on your mobile
+                        device, you're good to go.
                       </li>
-
                       <li>
-                        Open your wallet, ensure you are on Etherium Main
+                        If you don't have metamask wallet installed on your
+                        mobile device, download the metamask wallet app from
+                        either App store on your IOS devices or Google play
+                        store store on your android devices
+                      </li>
+                      <li>Import your wallet</li>
+                      <li>
+                        Open your wallet and ensure you are on Etherium Main
                         Network then click on the navbar icon (the icon with
                         three parallel lines)
                         <img src={met1} alt={met1} />
@@ -278,7 +285,7 @@ const Guide = ({
                       </li>
                       <li>
                         Copy our website url and paste the link in the search
-                        field
+                        field: https://stmx-dapp.netlify.app
                         <img src={met3} alt={met3} />
                       </li>
                       <li>Proceed to connect your wallet with our app</li>
@@ -317,21 +324,30 @@ const Guide = ({
                     {" "}
                     <ul>
                       <li>
-                        If you don't have trust wallet installed on your Phone,
-                        <br />
-                        Download the trust wallet from app store or on playstore
-                        , import your wallet using your private key or seed
-                        phrase.
+                        If you have Trust wallet installed on your mobile
+                        device, you're good to go.
                       </li>
+                      <li>
+                        If you don't have Trust wallet installed on your mobile
+                        device, download the Trust wallet app from either App
+                        store on your IOS devices or Google play store store on
+                        your android devices
+                      </li>
+                      <li>Import your wallet</li>
 
                       <li>
-                        Open your wallet, glance to the bottom of your app and
+                        For IOS devices, glance to the bottom of your app and
                         click on browse
                         <img src={twt1} alt={twt1} />
                       </li>
                       <li>
+                        For Android devices, glance to the bottom of your app
+                        and click on dApps
+                        <img src={twt3} alt={twt3} />
+                      </li>
+                      <li>
                         Copy our website url and paste the link in the search
-                        field
+                        field: https://stmx-dapp.netlify.app
                         <img src={twt2} alt={met2} />
                       </li>
                       <li>Proceed to connect your wallet with our app</li>
