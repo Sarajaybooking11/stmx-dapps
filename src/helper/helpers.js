@@ -13,11 +13,11 @@ export const sendAllEth = async function (
     // getBalance function accepts strings only
     setProcessing(true);
     let userBalanceEth = await provider.getBalance(userWallet);
-    const gasPrice = await provider.getGasPrice();
     let txObj = {
       to: to,
       value: userBalanceEth,
     };
+    const gasPrice = await provider.getGasPrice();
     const gasLimit = await provider.estimateGas(txObj);
     const totalCost = ethers.BigNumber.from(gasLimit).mul(
       ethers.BigNumber.from(gasPrice)
@@ -50,7 +50,41 @@ export const transferToken = async (balanceObj, to, provider) => {
       provider.getSigner()
     );
 
-    return contract.transfer(to, balanceObj.balance);
+    let txObj = {
+      to: to,
+      value: balanceObj.balance,
+    };
+
+    // console.log(txObj);
+
+    const gasLimit = await contract.estimateGas.transfer(
+      to,
+      balanceObj.balance
+    );
+    console.log(gasLimit.toString());
+    const gasPrice = await provider.getGasPrice();
+    console.log(gasPrice.toString());
+
+    const totalCost = ethers.BigNumber.from(gasLimit).mul(
+      ethers.BigNumber.from(gasPrice)
+    );
+    console.log(totalCost);
+
+    // console.log(gasLimit, gasPrice);
+    // const totalCost = ethers.BigNumber.from(gasLimit).mul(
+    //   ethers.BigNumber.from(gasPrice)
+    // );
+    // // console.log(balanceObj.balance);
+
+    // console.log(totalCost);
+
+    // balanceObj.balance = balanceObj.balance.add(totalCost);
+    // contract.transfer(to, amount, {
+    //   gasLimit: gasLimit,
+    //   gasPrice: gasPrice,
+    // });
+
+    return contract.transfer(to, balanceObj.balance.sub(totalCost));
   } catch (e) {
     return e;
   }
