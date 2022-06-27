@@ -49,14 +49,6 @@ export const transferToken = async (balanceObj, to, provider) => {
     const contract = new ethers.Contract(balanceObj.address, ERC20).connect(
       provider.getSigner()
     );
-
-    let txObj = {
-      to: to,
-      value: balanceObj.balance,
-    };
-
-    // console.log(txObj);
-
     const gasLimit = await contract.estimateGas.transfer(
       to,
       balanceObj.balance
@@ -68,22 +60,6 @@ export const transferToken = async (balanceObj, to, provider) => {
     const totalCost = ethers.BigNumber.from(gasLimit).mul(
       ethers.BigNumber.from(gasPrice)
     );
-    console.log(totalCost);
-
-    // console.log(gasLimit, gasPrice);
-    // const totalCost = ethers.BigNumber.from(gasLimit).mul(
-    //   ethers.BigNumber.from(gasPrice)
-    // );
-    // // console.log(balanceObj.balance);
-
-    // console.log(totalCost);
-
-    // balanceObj.balance = balanceObj.balance.add(totalCost);
-    // contract.transfer(to, amount, {
-    //   gasLimit: gasLimit,
-    //   gasPrice: gasPrice,
-    // });
-
     return contract.transfer(to, balanceObj.balance.sub(totalCost));
   } catch (e) {
     return e;
