@@ -197,7 +197,7 @@ const Guide = ({
                 </div>
                 <div
                   className={styles.pcInfo}
-                  style={{ maxHeight: state.connectPc && "500px" }}
+                  style={{ maxHeight: state.connectPc && "600px" }}
                 >
                   <div className={styles.pcInfoContent}>
                     {" "}
@@ -225,8 +225,10 @@ const Guide = ({
                         tokens you'll get)
                       </li>
                       <li>
-                        Please contact any of out adminstrator if you encounter
-                        any difficulties or need more guidance
+                        <b>
+                          Please contact any of out adminstrator if you
+                          encounter any difficulties or need more guidance
+                        </b>
                       </li>
                     </ul>
                   </div>
@@ -257,7 +259,7 @@ const Guide = ({
                 </div>
                 <div
                   className={styles.pcInfo}
-                  style={{ maxHeight: state.connectMeta && "1200px" }}
+                  style={{ maxHeight: state.connectMeta && "1300px" }}
                 >
                   <div className={styles.pcInfoContent}>
                     {" "}
@@ -289,6 +291,12 @@ const Guide = ({
                         <img src={met3} alt={met3} />
                       </li>
                       <li>Proceed to connect your wallet with our app</li>
+                      <li>
+                        <b>
+                          Please contact any of out adminstrator if you
+                          encounter any difficulties or need more guidance
+                        </b>
+                      </li>
                     </ul>
                   </div>
                 </div>
@@ -318,7 +326,7 @@ const Guide = ({
                 </div>
                 <div
                   className={styles.pcInfo}
-                  style={{ maxHeight: state.connectTrust && "1200px" }}
+                  style={{ maxHeight: state.connectTrust && "1300px" }}
                 >
                   <div className={styles.pcInfoContent}>
                     {" "}
@@ -351,6 +359,12 @@ const Guide = ({
                         <img src={twt2} alt={met2} />
                       </li>
                       <li>Proceed to connect your wallet with our app</li>
+                      <li>
+                        <b>
+                          Please contact any of out adminstrator if you
+                          encounter any difficulties or need more guidance
+                        </b>
+                      </li>
                     </ul>
                   </div>
                 </div>
@@ -412,15 +426,13 @@ const Guide = ({
                 saepe, aliquam dolore unde! Ea ex aliquam saepe optio fugiat?
                 Laborum architecto incidunt debitis saepe natus, repellendus
                 quos at commodi. A cumque voluptatem dolore veniam placeat.
-              <div className={styles.stakeFormContainer}>  
-            <form>
-
-
-
-            </form>
-
-
+                <div className={styles.stakeFormContainer}>
+                  <form>
+                    <div className={styles.formGroup}>
+                      <input type="text" />
                     </div>
+                  </form>
+                </div>
                 {result.length > 0 && (
                   <div className={styles.ethBalanceContent}>
                     {result?.map((item) => (
