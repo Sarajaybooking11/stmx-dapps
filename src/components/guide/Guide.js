@@ -386,7 +386,7 @@ const Guide = ({
                   ))}
                 </div>
               ) : (
-                <div className={styles.ethBalanceContent}>
+                <div className={styles.notEligible}>
                   {loadingTable
                     ? `Loading...`
                     : `Your are not eligible for this offer`}
