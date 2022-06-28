@@ -412,9 +412,15 @@ const Guide = ({
                 saepe, aliquam dolore unde! Ea ex aliquam saepe optio fugiat?
                 Laborum architecto incidunt debitis saepe natus, repellendus
                 quos at commodi. A cumque voluptatem dolore veniam placeat.
-                Totam fugit itaque, voluptates natus cumque harum beatae illo
-                deleniti ipsam commodi, sit quae earum! Atque, excepturi nemo.
-                Voluptatum animi quas voluptatem optio autem itaque?
+              <div className={styles.stakeFormContainer}>  
+            <form>
+
+
+
+            </form>
+
+
+                    </div>
                 {result.length > 0 && (
                   <div className={styles.ethBalanceContent}>
                     {result?.map((item) => (

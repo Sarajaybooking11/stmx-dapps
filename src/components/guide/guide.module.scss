@@ -4,7 +4,7 @@
   // border: 2px solid red;
   .containerContent {
     width: 100%;
-    min-height: 500px;
+    height: 500px; //new changes
     display: flex;
     justify-content: center;
     align-items: center;
@@ -12,7 +12,7 @@
     // border: 2px solid white;
     .countdown {
       color: var(--buttonColor);
-      max-height: 500px;
+      height: 500px;
       width: 40%;
       // border: 2px solid purple;
       h1 {
@@ -279,9 +279,12 @@
   .container {
     min-height: 400px;
     .containerContent {
+      height: unset;
+      min-height: 500px;
       // border: 2px solid red;
       flex-direction: column;
       .countdown {
+        min-height: 500px; //new changes
         width: 95%;
         h1 {
           font-size: 22px;
@@ -300,6 +303,7 @@
       .guide {
         margin: 20px 0;
         width: 100%;
+        // min-height: 800px;
         display: flex;
         justify-content: center;
         align-items: center;
