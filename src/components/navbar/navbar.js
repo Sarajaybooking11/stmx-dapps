@@ -22,7 +22,7 @@ const Navbar = ({ setStateValue, stateValue, setLoadingTable }) => {
       });
       setLoadingTable(true);
     }
-  }, [stateValue.walletConnected]);
+  }, [stateValue.walletConnected, setStateValue, setLoadingTable]);
 
   const updateSateValue = async (key, value) => {
     let newObj = { ...stateValue };

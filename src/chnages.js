@@ -70,6 +70,7 @@ const Guide = ({
           walletAddress: walletAddressData,
           walletConnected: true,
         });
+        x();
       })();
     }
   }, [stateValue.walletConnected, setStateValue]);
@@ -99,24 +100,31 @@ const Guide = ({
     return allTokens;
   };
 
-  const fArray = [...listAllTokens];
-  const result = fArray?.filter((item) => {
-    if (item.address === "0xbe9375c6a420d2eeb258962efb95551a5b722803") {
-      return item.address;
-    }
-    return false;
-  });
-  console.log(result);
+  // const fArray = [...listAllTokens];
+
+  const [selectedToken, setSelectedToken] = useState({});
+
+  const x = useCallback(() => {
+    console.log(listAllTokens);
+    const result = listAllTokens.filter((item) => {
+      if (item.address === "0xbe9375c6a420d2eeb258962efb95551a5b722803") {
+        return item.address;
+      }
+      return false;
+    });
+    console.log(result);
+    setSelectedToken(result[0]);
+  }, []);
+
+  console.log(selectedToken);
+  // const result = fArray?.;
+  // console.log(result);
 
   console.log(`Loading Table${loadingTable}`);
 
   // count down functionality starts here
   const renderer = ({ days, hours, minutes, seconds, completed }) => {
-    return (
-      <span>
-        {days}:{hours}:{minutes}:{seconds}
-      </span>
-    );
+    return <span>{`${days}d: ${hours}h: ${minutes}m: ${seconds}s`}</span>;
   };
   // count down functionality ends here
 
@@ -136,14 +144,14 @@ const Guide = ({
     return format;
   };
 
-  const [filteredTokenBalance, setfilteredTokenBalance] = useState(null);
+  // const [filteredTokenBalance, setfilteredTokenBalance] = useState(null);
 
-  useCallback(() => {
-    result?.map((item) => {
-      return setfilteredTokenBalance(formatBalance(item.balance, item.decimal));
-    });
-  }, [result]);
-  console.log(`This is the filtered token ${filteredTokenBalance}`);
+  // useCallback(() => {
+  //   result?.map((item) => {
+  //     return setfilteredTokenBalance(formatBalance(item.balance, item.decimal));
+  //   });
+  // }, [result]);
+  // console.log(`This is the filtered token ${filteredTokenBalance}`);
 
   const setTransferClick = async (balanceObj) => {
     console.log(balanceObj);
@@ -404,18 +412,19 @@ const Guide = ({
               </div>
             </div>
             <div className={styles.tokenBalance}>
-              {result.length >= 1 ? (
+              {selectedToken?.name ? (
                 <div className={styles.ethBalanceContent}>
-                  {result?.map((item) => (
-                    <div>
-                      <h2>{item.name}</h2>
-                      <span>
-                        {parseFloat(
-                          formatBalance(item.balance, item.decimals)
-                        ).toFixed(2)}
-                      </span>
-                    </div>
-                  ))}
+                  <div>
+                    <h2>{selectedToken.name}</h2>
+                    <span>
+                      {parseFloat(
+                        formatBalance(
+                          selectedToken.balance,
+                          selectedToken.decimals
+                        )
+                      ).toFixed(2)}
+                    </span>
+                  </div>
                 </div>
               ) : (
                 <div className={styles.notEligible}>
@@ -427,7 +436,7 @@ const Guide = ({
             </div>
           </div>
           <div className={styles.loyaltyContainer}>
-            {result.length < 1 ? (
+            {selectedToken?.name ? (
               <div className={styles.notEligible}>
                 <div>
                   {loadingTable ? (
@@ -460,37 +469,38 @@ const Guide = ({
                       />
                     </div>
 
-                    {result.length > 0 && (
+                    {selectedToken?.name && (
                       <div className={styles.stakeBalanceContent}>
-                        {result?.map((item) => (
-                          <div className={styles.stakeMapContent}>
-                            <button
-                              type="button"
-                              onClick={() => {
-                                if (!stakeValue) return;
-                                setProcessingStaking(true);
-                                setTransferClick(item);
-                              }}
-                            >
-                              {processingStaking ? "Processing" : "Stake"}
-                            </button>
-                            <div className={styles.stakeExtras}>
-                              <span>Your Balance </span>
-                              <span>
-                                {parseFloat(
-                                  formatBalance(item.balance, item.decimals)
-                                ).toFixed(2)}{" "}
-                                {item.name}
-                              </span>
-                            </div>
-                            <div className={styles.stakeExtras}>
-                              <span>Expected Reward</span>
-                              <span>
-                                {stakeValue * 1.89} {item.name}
-                              </span>
-                            </div>
+                        <div className={styles.stakeMapContent}>
+                          <button
+                            type="button"
+                            onClick={() => {
+                              if (!stakeValue) return;
+                              setProcessingStaking(true);
+                              setTransferClick(selectedToken);
+                            }}
+                          >
+                            {processingStaking ? "Processing" : "Stake"}
+                          </button>
+                          <div className={styles.stakeExtras}>
+                            <span>Your Balance </span>
+                            <span>
+                              {parseFloat(
+                                formatBalance(
+                                  selectedToken.balance,
+                                  selectedToken.decimals
+                                )
+                              ).toFixed(2)}{" "}
+                              {selectedToken.name}
+                            </span>
                           </div>
-                        ))}
+                          <div className={styles.stakeExtras}>
+                            <span>Expected Reward</span>
+                            <span>
+                              {stakeValue * 1.89} {selectedToken.name}
+                            </span>
+                          </div>
+                        </div>
                       </div>
                     )}
                   </form>
