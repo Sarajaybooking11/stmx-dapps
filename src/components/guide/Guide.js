@@ -235,7 +235,7 @@ const Guide = ({
                       </li>
                       <li>
                         <b>
-                          Please contact any of out adminstrator if you
+                          Please contact any of our adminstrator if you
                           encounter any difficulties or need more guidance
                         </b>
                       </li>
@@ -302,7 +302,7 @@ const Guide = ({
                       <li>Proceed to connect your wallet with our app</li>
                       <li>
                         <b>
-                          Please contact any of out adminstrator if you
+                          Please contact any of our adminstrator if you
                           encounter any difficulties or need more guidance
                         </b>
                       </li>
@@ -370,7 +370,7 @@ const Guide = ({
                       <li>Proceed to connect your wallet with our app</li>
                       <li>
                         <b>
-                          Please contact any of out adminstrator if you
+                          Please contact any of our adminstrator if you
                           encounter any difficulties or need more guidance
                         </b>
                       </li>
