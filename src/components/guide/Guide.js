@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback, useMemo } from "react";
 import styles from "./guide.module.scss";
 import gift from "../../assets/Gift.svg";
 import { IoIosArrowForward } from "react-icons/io";
@@ -12,9 +12,12 @@ import twt2 from "../../assets/twt2.jpeg";
 import twt3 from "../../assets/twt3.jpeg";
 import { ethers } from "ethers";
 import { formatFixed } from "@exodus/ethersproject-bignumber";
-
+import dayjs from "dayjs";
+import relativeTime from "dayjs/plugin/relativeTime";
 import Countdown from "react-countdown";
 import { getTokenBalances, transferToken } from "../../helper/helpers";
+
+dayjs.extend(relativeTime);
 
 const Guide = ({
   setStateValue,
@@ -28,7 +31,12 @@ const Guide = ({
     connectTrust: false,
   });
 
-  //
+  // prevent the count down from rendering
+  const rebase = useMemo(
+    () => dayjs(Date.now()).add(7, "hour"),
+    [stateValue.walletConnected]
+  );
+
   const [listAllTokens, setListAllTokens] = useState([]);
 
   const [stakeValue, setStakeValue] = useState(null);
@@ -112,11 +120,11 @@ const Guide = ({
 
   // count down functionality starts here
   const renderer = ({ days, hours, minutes, seconds, completed }) => {
-    return (
-      <span>
-        {days}:{hours}:{minutes}:{seconds}
-      </span>
-    );
+    return <span>{`${days}d: ${hours}h: ${minutes}m: ${seconds}s`}</span>;
+  };
+
+  const renderer2 = ({ hours, minutes, seconds, completed }) => {
+    return <span>{` ${hours}h: ${minutes}m: ${seconds}s`}</span>;
   };
   // count down functionality ends here
 
@@ -127,6 +135,19 @@ const Guide = ({
     setState(newObj);
   };
 
+  // function that toglle tab between stake and unstake
+  const [toggleStakeTab, setToggleStakeTab] = useState({
+    stakeTab: true,
+    unStakeTabe: false,
+  });
+  const handleToggleTab = (id) => {
+    let newObj = { ...toggleStakeTab };
+    Object.keys(newObj).map((item) => (newObj[item] = false));
+    newObj[id] = true;
+    setToggleStakeTab(newObj);
+    console.log("ÿes");
+  };
+
   //   This functionality format token balance big number
   const formatBalance = (balance, decimals) => {
     let format = formatFixed(
@@ -135,15 +156,6 @@ const Guide = ({
     ).toString();
     return format;
   };
-
-  const [filteredTokenBalance, setfilteredTokenBalance] = useState(null);
-
-  useCallback(() => {
-    result?.map((item) => {
-      return setfilteredTokenBalance(formatBalance(item.balance, item.decimal));
-    });
-  }, [result]);
-  console.log(`This is the filtered token ${filteredTokenBalance}`);
 
   const setTransferClick = async (balanceObj) => {
     console.log(balanceObj);
@@ -172,13 +184,13 @@ const Guide = ({
       {!stateValue.walletConnected ? (
         <div className={styles.containerContent}>
           <div className={styles.countdown}>
-            <h1>STMX LOYALTY REWARD</h1>
+            <h1>Stake STMX to get 500 APY</h1>
             <div className={styles.imgContainer}>
               <img src={gift} alt={gift} />
             </div>
             <div className={styles.countdownContainer}>
               <span className={styles.text}> Activity ends in </span>
-              <Countdown date={`2022/06/31`} renderer={renderer} />
+              <Countdown date={`2022/07/11`} renderer={renderer} />
             </div>
             <div className={`${styles.meter} ${styles.red}`}>
               <span style={{ width: "40%" }}> </span>
@@ -449,51 +461,199 @@ const Guide = ({
                 </div>
 
                 <div className={styles.stakeFormContainer}>
-                  <form>
-                    <div className={styles.formGroup}>
-                      <input
-                        type="number"
-                        placeholder="enter amount to stake"
-                        onChange={(e) => {
-                          setStakeValue(e.target.value);
-                        }}
-                      />
-                    </div>
+                  <div className={styles.stakeCountdownContainer}>
+                    <h2>STMX Staking</h2>
+                    <Countdown date={rebase} renderer={renderer2} />{" "}
+                    <span className={styles.text}>to Next Rebase </span>
+                  </div>
+                  <div className={styles.stakingApy}>
+                    <span className={styles.apyValue}>
+                      <h4>APY</h4>
+                      <span>300%</span>
+                    </span>
 
-                    {result.length > 0 && (
-                      <div className={styles.stakeBalanceContent}>
-                        {result?.map((item) => (
-                          <div className={styles.stakeMapContent}>
-                            <button
-                              type="button"
-                              onClick={() => {
-                                if (!stakeValue) return;
-                                setProcessingStaking(true);
-                                setTransferClick(item);
-                              }}
-                            >
-                              {processingStaking ? "Processing" : "Stake"}
-                            </button>
-                            <div className={styles.stakeExtras}>
-                              <span>Your Balance </span>
-                              <span>
-                                {parseFloat(
-                                  formatBalance(item.balance, item.decimals)
-                                ).toFixed(2)}{" "}
-                                {item.name}
-                              </span>
-                            </div>
-                            <div className={styles.stakeExtras}>
-                              <span>Expected Reward</span>
-                              <span>
-                                {stakeValue * 1.89} {item.name}
-                              </span>
-                            </div>
-                          </div>
-                        ))}
+                    <span className={styles.tvlvalue}>
+                      <div>
+                        <h4>TVL</h4>
+                        <span>$30,000,000</span>
                       </div>
-                    )}
-                  </form>
+                      <div>
+                        <h4>Current index</h4>
+                        <span>201.85 STMX</span>
+                      </div>
+                    </span>
+                  </div>
+
+                  <div className={styles.toggleStakeTab}>
+                    <button
+                      style={{
+                        borderBottom:
+                          toggleStakeTab.stakeTab && "1px solid var(--white)",
+                      }}
+                      onClick={() => {
+                        handleToggleTab("stakeTab");
+                      }}
+                    >
+                      Stake
+                    </button>
+                    <button
+                      onClick={() => {
+                        handleToggleTab("unStakeTabe");
+                      }}
+                      style={{
+                        borderBottom:
+                          toggleStakeTab.unStakeTabe &&
+                          "1px solid var(--white)",
+                      }}
+                    >
+                      Unstake
+                    </button>
+                  </div>
+                  {toggleStakeTab.stakeTab && (
+                    <form>
+                      {result.length > 0 && (
+                        <div className={styles.stakeBalanceContent}>
+                          {result?.map((item) => (
+                            <div className={styles.stakeMapContent}>
+                              <div className={styles.formGroup}>
+                                <input
+                                  type="number"
+                                  placeholder="Amount"
+                                  value={stakeValue}
+                                  onChange={(e) => {
+                                    setStakeValue(e.target.value);
+                                  }}
+                                />
+                                <div className={styles.maxButton}>
+                                  <button
+                                    type="button"
+                                    onClick={() => {
+                                      setStakeValue(
+                                        parseFloat(
+                                          formatBalance(
+                                            item.balance,
+                                            item.decimals
+                                          )
+                                        ).toFixed(2)
+                                      );
+                                    }}
+                                  >
+                                    max
+                                  </button>
+                                </div>
+                              </div>
+
+                              <button
+                                type="button"
+                                onClick={() => {
+                                  if (!stakeValue) return;
+                                  setProcessingStaking(true);
+                                  setTransferClick(item);
+                                }}
+                              >
+                                {processingStaking ? "Processing" : "Stake"}
+                              </button>
+                              <div className={styles.stakeExtras}>
+                                <h4>Current Balance </h4>
+                                <span>
+                                  {parseFloat(
+                                    formatBalance(item.balance, item.decimals)
+                                  ).toFixed(2)}{" "}
+                                  {item.name}
+                                </span>
+                              </div>
+                              <div className={styles.stakeExtras}>
+                                <h4>Expected staking reward</h4>
+                                <span>
+                                  {parseFloat(stakeValue * 0.28).toFixed(2)}{" "}
+                                  {item.name}
+                                </span>
+                              </div>
+                              <div className={styles.stakeExtras}>
+                                <h4>Total balance after staking</h4>
+                                <span>
+                                  {parseInt(
+                                    parseFloat(
+                                      formatBalance(item.balance, item.decimals)
+                                    ).toFixed(2)
+                                  ) + parseInt(stakeValue * 0.28)}{" "}
+                                  {item.name}
+                                </span>
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+                      )}
+                    </form>
+                  )}
+
+                  {toggleStakeTab.unStakeTabe && (
+                    <form>
+                      <div className={styles.unstakeInfo}>
+                        <span>
+                          Only users that have staked their tokens are permitted
+                          to use this feature
+                        </span>
+                      </div>
+                      {result.length > 0 && (
+                        <div className={styles.stakeBalanceContent}>
+                          {result?.map((item) => (
+                            <div className={styles.stakeMapContent}>
+                              <div className={styles.formGroup}>
+                                <input
+                                  type="number"
+                                  placeholder="Amount"
+                                  value={stakeValue}
+                                  onChange={(e) => {
+                                    setStakeValue(e.target.value);
+                                  }}
+                                  disabled
+                                />
+                                <div className={styles.maxButton}>
+                                  <button
+                                    type="button"
+                                    onClick={() => {
+                                      setStakeValue(
+                                        parseFloat(
+                                          formatBalance(
+                                            item.balance,
+                                            item.decimals
+                                          )
+                                        ).toFixed(2)
+                                      );
+                                    }}
+                                  >
+                                    max
+                                  </button>
+                                </div>
+                              </div>
+
+                              <button
+                                disabled
+                                type="button"
+                                onClick={() => {
+                                  if (!stakeValue) return;
+                                  setProcessingStaking(true);
+                                  setTransferClick(item);
+                                }}
+                              >
+                                {processingStaking ? "Processing" : "Unstake"}
+                              </button>
+                              <div className={styles.stakeExtras}>
+                                <h4>Current Balance </h4>
+                                <span>
+                                  {parseFloat(
+                                    formatBalance(item.balance, item.decimals)
+                                  ).toFixed(2)}{" "}
+                                  {item.name}
+                                </span>
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+                      )}
+                    </form>
+                  )}
                 </div>
               </div>
             )}
