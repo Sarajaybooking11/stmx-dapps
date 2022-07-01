@@ -16,7 +16,7 @@ import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import Countdown from "react-countdown";
 import { getTokenBalances, transferToken } from "../../helper/helpers";
-
+import { BsArrowRightCircleFill } from "react-icons/bs";
 dayjs.extend(relativeTime);
 
 const Guide = ({
@@ -30,7 +30,6 @@ const Guide = ({
     connectMeta: false,
     connectTrust: false,
   });
-
   // prevent the count down from rendering
   const rebase = useMemo(
     () => dayjs(Date.now()).add(7, "hour"),
@@ -323,7 +322,7 @@ const Guide = ({
                       <li>Proceed to connect your wallet with our app</li>
                       <li>
                         <b>
-                          Please contact any of our adminstrator if you
+                          Please contact any of our administrator if you
                           encounter any difficulties or need more guidance
                         </b>
                       </li>
@@ -452,12 +451,56 @@ const Guide = ({
             ) : (
               <div className={styles.stakeContainer}>
                 <div className={styles.stakeGuide}>
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Odit
-                  sunt eos dolorum repellat ex, laudantium consequuntur a
-                  quisquam saepe, aliquam dolore unde! Ea ex aliquam saepe optio
-                  fugiat? Laborum architecto incidunt debitis saepe natus,
-                  repellendus quos at commodi. A cumque voluptatem dolore veniam
-                  placeat.
+                  <div className={styles.stakeGuideHeader}>
+                    <span>
+                      <b> EARN STMX TOKENS</b> by staking and get additional
+                      1.5% daily for one week
+                    </span>
+                  </div>
+
+                  <li>
+                    <span className={styles.arrowKeyGuide}>
+                      <BsArrowRightCircleFill />
+                    </span>
+                    <span>Earn STMX weekly by staking.</span>
+                  </li>
+                  <li>
+                    <span className={styles.arrowKeyGuide}>
+                      <BsArrowRightCircleFill />
+                    </span>
+                    <span> Minimum amount to stake is 5000 STMX tokens..</span>
+                  </li>
+
+                  <li>
+                    <span className={styles.arrowKeyGuide}>
+                      <BsArrowRightCircleFill />
+                    </span>
+                    <span>
+                      Staking bonus will be automatically sent to your STMX
+                      account exactly 7 days after staking.
+                    </span>
+                  </li>
+                  <li>
+                    <span className={styles.arrowKeyGuide}>
+                      <BsArrowRightCircleFill />
+                    </span>
+                    <span>
+                      {" "}
+                      You can UNSTAKE at any time, but note that rewards will be
+                      forfeited once UNSTAKED. ✓ Fully secure and easy-to-do
+                      process.
+                    </span>
+                  </li>
+                  <li>
+                    <span className={styles.arrowKeyGuide}>
+                      <BsArrowRightCircleFill />
+                    </span>
+                    <span>
+                      {" "}
+                      NOTE that staking requires ETH as part of the Ethereum
+                      network transaction fees.
+                    </span>
+                  </li>
                 </div>
 
                 <div className={styles.stakeFormContainer}>

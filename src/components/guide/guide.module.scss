@@ -272,6 +272,26 @@
           // border: 2px solid red;
           width: 100%;
           min-height: 120px;
+          padding: 20px 0;
+          .stakeGuideHeader {
+            font-size: 16px;
+            color: var(--buttonColor);
+            span {
+              font-size: 24px;
+            }
+          }
+          li {
+            padding-top: 20px;
+            list-style: none;
+            // border: 3px solid red;
+            display: flex;
+            align-items: center;
+            .arrowKeyGuide {
+              margin-right: 10px;
+              font-size: 12px;
+              color: var(--buttonColor);
+            }
+          }
         }
         .stakeFormContainer {
           // border: 3px solid red;
