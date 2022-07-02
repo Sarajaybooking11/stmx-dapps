@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback, useMemo } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import styles from "./guide.module.scss";
 import gift from "../../assets/Gift.svg";
 import { IoIosArrowForward } from "react-icons/io";
