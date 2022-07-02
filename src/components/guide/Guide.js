@@ -453,8 +453,7 @@ const Guide = ({
                 <div className={styles.stakeGuide}>
                   <div className={styles.stakeGuideHeader}>
                     <span>
-                      <b> EARN STMX TOKENS</b> by staking and get additional
-                      1.5% daily for one week
+                      <b> EARN STMX TOKENS to earn 300% apy</b>
                     </span>
                   </div>
 
@@ -468,7 +467,13 @@ const Guide = ({
                     <span className={styles.arrowKeyGuide}>
                       <BsArrowRightCircleFill />
                     </span>
-                    <span> Minimum amount to stake is 5000 STMX tokens..</span>
+                    <span>earn 6.5% of your total stakes in 5 days.</span>
+                  </li>
+                  <li>
+                    <span className={styles.arrowKeyGuide}>
+                      <BsArrowRightCircleFill />
+                    </span>
+                    <span>Minimum amount to stake is 20000 STMX tokens.</span>
                   </li>
 
                   <li>
@@ -476,8 +481,8 @@ const Guide = ({
                       <BsArrowRightCircleFill />
                     </span>
                     <span>
-                      Staking bonus will be automatically sent to your STMX
-                      account exactly 7 days after staking.
+                      Staking bonus will be automatically compounded to your
+                      previous stakes to earn more token.
                     </span>
                   </li>
                   <li>
@@ -486,8 +491,8 @@ const Guide = ({
                     </span>
                     <span>
                       {" "}
-                      You can UNSTAKE at any time, but note that rewards will be
-                      forfeited once UNSTAKED.
+                      You can only unstake 7 days after your first initial
+                      staking.
                     </span>
                   </li>
                   <li>
