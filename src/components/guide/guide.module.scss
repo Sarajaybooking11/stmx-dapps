@@ -547,6 +547,11 @@
         .stakeContainer {
           .stakeGuide {
             font-size: 13px;
+            .stakeGuideHeader {
+              span {
+                font-size: 13px;
+              }
+            }
           }
           .stakingApy {
             .apyValue {

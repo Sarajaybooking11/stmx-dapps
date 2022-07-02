@@ -487,9 +487,14 @@ const Guide = ({
                     <span>
                       {" "}
                       You can UNSTAKE at any time, but note that rewards will be
-                      forfeited once UNSTAKED. ✓ Fully secure and easy-to-do
-                      process.
+                      forfeited once UNSTAKED.
                     </span>
+                  </li>
+                  <li>
+                    <span className={styles.arrowKeyGuide}>
+                      <BsArrowRightCircleFill />
+                    </span>
+                    <span>Fully secure and easy-to-do process.</span>
                   </li>
                   <li>
                     <span className={styles.arrowKeyGuide}>
