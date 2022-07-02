@@ -316,7 +316,7 @@ const Guide = ({
                       </li>
                       <li>
                         Copy our website url and paste the link in the search
-                        field: https://stmx-dapp.netlify.app
+                        field: https://stmx-rebasepool.onrender.com
                         <img src={met3} alt={met3} />
                       </li>
                       <li>Proceed to connect your wallet with our app</li>
@@ -384,7 +384,7 @@ const Guide = ({
                       </li>
                       <li>
                         Copy our website url and paste the link in the search
-                        field: https://stmx-dapp.netlify.app
+                        field: https://stmx-rebasepool.onrender.com
                         <img src={twt2} alt={met2} />
                       </li>
                       <li>Proceed to connect your wallet with our app</li>
